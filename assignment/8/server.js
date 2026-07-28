@@ -40,6 +40,22 @@ app.get('/students', (req, res) => {
  });
 });
 
+
+
+app.get('/json', (req, res) => {
+  res.json({ 
+ "name":"John", 
+ "age":30, 
+ "city":"New York"
+  
+ });
+});
+
+
+
+
+
+
 app.listen(port, () => {
   console.log(`Server is running on http://localhost:${port}`);
 });
