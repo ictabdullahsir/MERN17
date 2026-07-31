@@ -1,5 +1,7 @@
 // run mongocrud info below/////
+
 open postman + open mongodb compuse+ "vs code">> npm run dev 
+
 ## new connection ##
 post   localhost:4000/products 
 ## body >> row>> josn select
