@@ -4,12 +4,16 @@ open postman + open mongodb compuse+ "vs code">> npm run dev
 post   localhost:4000/products 
 ## body >> row>> josn select
 write json data send>>..................
+
 {
     "name": "r",
+    
     "description": "des",
+    
     "price": 200
-
+    
 }
+
 ....................................
 output >> Body >> Json 
 ........................
