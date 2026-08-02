@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Book Entry Form</title>
+<style>
+  :root {
+    --bg: #f4f5f7;
+    --card: #ffffff;
+    --primary: #2f6fed;
+    --primary-dark: #1e54c4;
+    --text: #1c1f26;
+    --muted: #6b7280;
+    --border: #e2e4e9;
+    --success: #16a34a;
+    --error: #dc2626;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    font-family: "Segoe UI", "Noto Sans Bengali", Arial, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    padding: 32px 16px;
+  }
+  h1 {
+    text-align: center;
+    font-size: 22px;
+    margin-bottom: 24px;
+  }
+  .wrap {
+    max-width: 880px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+  }
+  @media (max-width: 720px) {
+    .wrap { grid-template-columns: 1fr; }
+  }
+  .card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+  }
+  .card h2 {
+    font-size: 16px;
+    margin: 0 0 16px;
+    color: var(--primary-dark);
+  }
+  label {
+    display: block;
+    font-size: 13px;
+    color: var(--muted);
+    margin-bottom: 4px;
+    margin-top: 12px;
+  }
+  input, select {
+    width: 100%;
+    padding: 9px 10px;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    font-size: 14px;
+    background: #fafafa;
+  }
+  input:focus, select:focus {
+    outline: none;
+    border-color: var(--primary);
+    background: #fff;
+  }
+  button {
+    margin-top: 18px;
+    width: 100%;
+    padding: 10px;
+    border: none;
+    border-radius: 8px;
+    background: var(--primary);
+    color: #fff;
+    font-size: 14px;
+    cursor: pointer;
+  }
+  button:hover { background: var(--primary-dark); }
+  .msg {
+    margin-top: 10px;
+    font-size: 13px;
+    min-height: 16px;
+  }
+  .msg.success { color: var(--success); }
+  .msg.error { color: var(--error); }
+  .list-card {
+    grid-column: 1 / -1;
+  }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+    margin-top: 8px;
+  }
+  th, td {
+    text-align: left;
+    padding: 8px 6px;
+    border-bottom: 1px solid var(--border);
+  }
+  th { color: var(--muted); font-weight: 600; }
+</style>
+</head>
+<body>
+
+<h1>বই ও লেখক এন্ট্রি ফর্ম</h1>
+
+<div class="wrap">
+
+  <!-- Author Form -->
+  <div class="card">
+    <h2>লেখক যোগ করুন</h2>
+    <form id="authorForm">
+      <label for="authorName">নাম</label>
+      <input type="text" id="authorName" required />
+
+      <label for="authorCountry">দেশ</label>
+      <input type="text" id="authorCountry" required />
+
+      <button type="submit">লেখক সংরক্ষণ করুন</button>
+      <div class="msg" id="authorMsg"></div>
+    </form>
+  </div>
+
+  <!-- Book Form -->
+  <div class="card">
+    <h2>বই যোগ করুন</h2>
+    <form id="bookForm">
+      <label for="bookTitle">বইয়ের নাম</label>
+      <input type="text" id="bookTitle" required />
+
+      <label for="bookPrice">মূল্য</label>
+      <input type="number" id="bookPrice" step="0.01" required />
+
+      <label for="bookCategory">ক্যাটাগরি</label>
+      <input type="text" id="bookCategory" required />
+
+      <label for="bookSales">বিক্রয় সংখ্যা</label>
+      <input type="number" id="bookSales" value="0" />
+
+      <label for="bookTags">ট্যাগ (কমা দিয়ে আলাদা করুন)</label>
+      <input type="text" id="bookTags" placeholder="programming, software, best-practices" />
+
+      <label style="display:flex; align-items:center; gap:8px; margin-top:14px;">
+        <input type="checkbox" id="bookInStock" style="width:auto;" checked />
+        স্টকে আছে
+      </label>
+
+      <label for="bookAuthor">লেখক</label>
+      <select id="bookAuthor">
+        <option value="">-- লেখক নির্বাচন করুন --</option>
+      </select>
+
+      <button type="submit">বই সংরক্ষণ করুন</button>
+      <div class="msg" id="bookMsg"></div>
+    </form>
+  </div>
+
+  <!-- Books with authors list -->
+  <div class="card list-card">
+    <h2>সংরক্ষিত বই তালিকা</h2>
+    <table id="bookTable">
+      <thead>
+        <tr>
+          <th>নাম</th>
+          <th>মূল্য</th>
+          <th>ক্যাটাগরি</th>
+          <th>স্টক</th>
+          <th>ট্যাগ</th>
+          <th>লেখক</th>
+          <th>দেশ</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+  </div>
+
+</div>
+
+<script>
+const API_BASE = "http://localhost:4000";
+
+async function safeJson(res) {
+  const text = await res.text();
+  try {
+    return JSON.parse(text);
+  } catch {
+    throw new Error(`Server responded with status ${res.status}: ${text || "(empty body)"}`);
+  }
+}
+
+async function loadAuthors() {
+  const res = await fetch(`${API_BASE}/authors`);
+  const json = await safeJson(res);
+  const select = document.getElementById("bookAuthor");
+  select.innerHTML = '<option value="">-- লেখক নির্বাচন করুন --</option>';
+  (json.data || []).forEach(a => {
+    const opt = document.createElement("option");
+    opt.value = a._id;
+    opt.textContent = a.name;
+    select.appendChild(opt);
+  });
+}
+
+async function loadBooks() {
+  const res = await fetch(`${API_BASE}/book-with-authors`);
+  const json = await safeJson(res);
+  const tbody = document.querySelector("#bookTable tbody");
+  tbody.innerHTML = "";
+  (json.data || []).forEach(b => {
+    const tr = document.createElement("tr");
+    tr.innerHTML = `
+      <td>${b.title ?? ""}</td>
+      <td>${b.price ?? ""}</td>
+      <td>${b.category ?? ""}</td>
+      <td>${b.inStock ? "হ্যাঁ" : "না"}</td>
+      <td>${(b.tags || []).join(", ")}</td>
+      <td>${b.author_name ?? ""}</td>
+      <td>${b.authorCountry ?? ""}</td>
+    `;
+    tbody.appendChild(tr);
+  });
+}
+
+document.getElementById("authorForm").addEventListener("submit", async (e) => {
+  e.preventDefault();
+  const msg = document.getElementById("authorMsg");
+  msg.textContent = "";
+  msg.className = "msg";
+
+  const name = document.getElementById("authorName").value.trim();
+  const country = document.getElementById("authorCountry").value.trim();
+
+  try {
+    const res = await fetch(`${API_BASE}/authors`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ name, country }),
+    });
+    const json = await safeJson(res);
+    if (json.status === "success") {
+      msg.textContent = "লেখক সংরক্ষণ হয়েছে।";
+      msg.classList.add("success");
+      e.target.reset();
+      loadAuthors();
+    } else {
+      throw new Error(json.error || "ত্রুটি হয়েছে");
+    }
+  } catch (err) {
+    msg.textContent = "ত্রুটি: " + err.message;
+    msg.classList.add("error");
+  }
+});
+
+document.getElementById("bookForm").addEventListener("submit", async (e) => {
+  e.preventDefault();
+  const msg = document.getElementById("bookMsg");
+  msg.textContent = "";
+  msg.className = "msg";
+
+  const title = document.getElementById("bookTitle").value.trim();
+  const price = document.getElementById("bookPrice").value;
+  const category = document.getElementById("bookCategory").value.trim();
+  const salesCount = document.getElementById("bookSales").value;
+  const tags = document.getElementById("bookTags").value;
+  const inStock = document.getElementById("bookInStock").checked;
+  const authorId = document.getElementById("bookAuthor").value;
+
+  try {
+    const res = await fetch(`${API_BASE}/books`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ title, price, category, salesCount, inStock, authorId, tags }),
+    });
+    const json = await safeJson(res);
+    if (json.status === "success") {
+      msg.textContent = "বই সংরক্ষণ হয়েছে।";
+      msg.classList.add("success");
+      e.target.reset();
+      loadBooks();
+    } else {
+      throw new Error(json.error || "ত্রুটি হয়েছে");
+    }
+  } catch (err) {
+    msg.textContent = "ত্রুটি: " + err.message;
+    msg.classList.add("error");
+  }
+});
+
+loadAuthors();
+loadBooks();
+</script>
+
+</body>
+</html>

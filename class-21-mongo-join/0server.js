@@ -6,13 +6,6 @@ const mongoose = require("mongoose");
 const path = require("path");
 const app = express();
 app.use(express.json());
-app.use((req, res, next) => {
-  res.header("Access-Control-Allow-Origin", "*");
-  res.header("Access-Control-Allow-Methods", "GET,POST,OPTIONS");
-  res.header("Access-Control-Allow-Headers", "Content-Type");
-  if (req.method === "OPTIONS") return res.sendStatus(204);
-  next();
-});
 app.use(express.static(path.join(__dirname, "public")));
 
 const MONGODB_URI = "mongodb+srv://bsse1106_db_user:GlgnLuyiXXjJ3wds@cluster0.m3zhjem.mongodb.net/";
@@ -161,5 +154,5 @@ app.get("/book-with-authors", async (req, res) => {
 
 app.listen(4000, async () => {
   await connectToDatabase();
-  console.log("Server is running on port 4000 http://127.0.0.1:5500/class-21-mongo-join/index.html");
+  console.log("Server is running on port 4000");
 });
