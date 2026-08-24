@@ -1,0 +1,6 @@
+../node_modules/
+node_modules/
+jspm_packages/
+web_modules/
+.npm/
+pnpm-store/
