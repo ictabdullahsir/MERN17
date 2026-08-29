@@ -2,7 +2,7 @@ const http = require("http");
 const fs = require("fs");
 const path = require("path");
 
-const grok_api_key = ""
+const grok_api_key = "xai-6DS17byND2DtjjdGEigPrJkYZc8R5cx0SuvqSg3qM3u1uKx4X7UcQ1uAeJYlWDLQxZLFPBXiZQXkYS68"
 
 function renderPage(result=""){
     const filePath = path.join(__dirname, "random.html");
