@@ -12,7 +12,7 @@ const rateLimit = require("express-rate-limit");
 
 const app = express();
 const PORT = process.env.PORT || 4000;
-const MONGODB_URI = process.env.MONGODB_URI || "mongodb://127.0.0.1:27017/student_management";
+const MONGODB_URI = process.env.MONGODB_URI || "mongodb+srv://ictabdullahsir_db_user:oC0ZqA1mN1vPJTWW@cluster0.bna5sft.mongodb.net/student_management";
 
 app.use(express.json());
 app.use(cors({ origin: "*" }));
