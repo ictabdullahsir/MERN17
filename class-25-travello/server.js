@@ -1,3 +1,6 @@
+const dns = require("dns");
+dns.setServers(["8.8.8.8", "1.1.1.1"]);
+
 require('express-async-errors');
 const express = require('express');
 const path = require('path');

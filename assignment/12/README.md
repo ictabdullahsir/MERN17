@@ -50,7 +50,7 @@ Server running on http://localhost:5000
 - **GET** `/api/tours`
 
 ### 3. Update Tour
-- **PUT** `/api/tours/:id`
+- **PUT** `/api/tours/id`
 ```json
 {
   "price": 5500
@@ -58,7 +58,7 @@ Server running on http://localhost:5000
 ```
 
 ### 4. Delete Tour
-- **DELETE** `/api/tours/:id`
+- **DELETE** `/api/tours/id`
 
 Response:
 ```json
