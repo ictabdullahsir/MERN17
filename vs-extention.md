@@ -30,7 +30,10 @@ code --install-extension esbenp.prettier-vscode;
 
 | ExtensionPurpose                                                                                                                                                                                 |                                         |
 | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | --------------------------------------- |
-| 🔥 **Prettier - Code formatter**                                                                                                                                                                 | Automatically format HTML, CSS, JS, JSX |
+| 
+Auto Import - ES6, TS, JSX, TSX
+
+🔥 **Prettier - Code formatter**                                                                                                                                                                 | Automatically format HTML, CSS, JS, JSX |
 | 🧹 **ESLint**                                                                                                                                                                                    | Find JavaScript/React problems          |
 | 🏷️ **Auto Rename Tag**                                                                                                                                                                          | Rename opening + closing tags together  |
 | ⚡ **Auto Close Tag**                                                                                                                                                                             | Automatically close HTML tags           |
