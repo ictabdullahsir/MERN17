@@ -1,0 +1,71 @@
+{
+  "users": [
+    {
+      "id": "user-demo",
+      "name": "Demo User",
+      "email": "demo@travello.com",
+      "passwordHash": "$2b$10$N9qo8uLOickgx2ZMRZoMyeIjZAgcfl7p92ldGxad68LJZdL17lhWy",
+      "createdAt": "2026-01-01T00:00:00.000Z"
+    },
+    {
+      "id": "user-1789575521813",
+      "name": "abd",
+      "email": "abd@travello.com",
+      "passwordHash": "$2a$10$Kjxpy9enGiEpPSRFx9uCjOIHva.4tIKfdjepWOx1OnZt2EntHsjDy",
+      "createdAt": "2026-09-16T16:18:41.813Z"
+    }
+  ],
+  "tours": [
+    {
+      "id": "tour-1",
+      "title": "Cox's Bazar Beach Tour",
+      "description": "Enjoy the longest natural sea beach and beautiful sunset views.",
+      "destination": "Cox's Bazar, Bangladesh",
+      "price": 5500,
+      "duration": "3 Days / 2 Nights",
+      "image": "https://images.unsplash.com/photo-1507520657283-1c0b7f5b7c7a?auto=format&fit=crop&w=900&q=80"
+    },
+    {
+      "id": "tour-2",
+      "title": "Sajek Valley Adventure",
+      "description": "Explore clouds, hills, local culture and peaceful nature.",
+      "destination": "Sajek, Bangladesh",
+      "price": 4200,
+      "duration": "2 Days / 1 Night",
+      "image": "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=900&q=80"
+    },
+    {
+      "id": "tour-3",
+      "title": "Sylhet Nature Escape",
+      "description": "Visit tea gardens, waterfalls and green landscapes.",
+      "destination": "Sylhet, Bangladesh",
+      "price": 3800,
+      "duration": "2 Days / 1 Night",
+      "image": "https://images.unsplash.com/photo-1470770841072-f978cf4d019e?auto=format&fit=crop&w=900&q=80"
+    }
+  ],
+  "bookings": [
+    {
+      "id": "booking-1789575563237",
+      "userId": "user-1789575521813",
+      "tourId": "tour-2",
+      "tourTitle": "Sajek Valley Adventure",
+      "date": "2026-09-17",
+      "guests": 1,
+      "totalPrice": 4200,
+      "status": "Pending",
+      "createdAt": "2026-09-16T16:19:23.237Z"
+    },
+    {
+      "id": "booking-1789795035429",
+      "userId": "user-1789575521813",
+      "tourId": "tour-2",
+      "tourTitle": "Sajek Valley Adventure",
+      "date": "2026-09-09",
+      "guests": 1,
+      "totalPrice": 4200,
+      "status": "Pending",
+      "createdAt": "2026-09-19T05:17:15.429Z"
+    }
+  ]
+}
